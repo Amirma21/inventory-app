@@ -9,7 +9,7 @@
       <v-row class="pa-8">
         <v-col cols="6">
           <add-category v-model="newCategory" @add-category="addToCategoryList"/>
-          <add-product/>
+          <add-product  :categories-list="categoryList"/>
         </v-col>
       </v-row>
     </v-main>

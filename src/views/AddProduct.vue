@@ -12,7 +12,15 @@
             type="number"
         />
         <label class="font-weight-bold">category</label>
-        <v-select :items="categoryTitleList"/>
+        <v-select :items="selectionItems"/>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="6">
+        <a-button placeholder="cancel"/>
+      </v-col>
+      <v-col cols="6">
+        <a-button placeholder="Add product"/>
       </v-col>
     </v-row>
   </v-form>
@@ -21,17 +29,19 @@
 <script setup lang="ts">
 
 import AInput from "@/components/AInput.vue";
-import {onMounted, ref} from "vue";
-import {Product} from "@/types";
+import {ref, defineProps, PropType, computed} from "vue";
+import {Category, Product} from "@/types";
+import AButton from "@/components/AButton.vue";
 
 const newProduct = ref<Product>({categoryTitle: '', quantity: 0, title: ""})
-let categoryTitleList = []
 
-const categoryList = JSON.parse(localStorage.getItem('category')!)
+const props = defineProps({
+  categoriesList: {required: true, type: Object as PropType<Category[]>}
+})
 
-
-onMounted(() => categoryList.map((item: any) => categoryTitleList.push(item.title)))
-
+const selectionItems = computed(() => {
+  return props.categoriesList.map((item: any) => item.title)
+})
 
 </script>
 
