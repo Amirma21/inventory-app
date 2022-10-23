@@ -12,7 +12,7 @@
             type="number"
         />
         <label class="font-weight-bold">category</label>
-        <v-select :items="selectionItems"/>
+        <v-select />
       </v-col>
     </v-row>
     <v-row>
@@ -35,13 +35,10 @@ import AButton from "@/components/AButton.vue";
 
 const newProduct = ref<Product>({categoryTitle: '', quantity: 0, title: ""})
 
-const props = defineProps({
-  categoriesList: {required: true, type: Object as PropType<Category[]>}
-})
 
-const selectionItems = computed(() => {
-  return props.categoriesList.map((item: any) => item.title)
-})
+// const selectionItems = computed(() => {
+//   return props.categoriesList.map((item: any) => item.title)
+// })
 
 </script>
 
