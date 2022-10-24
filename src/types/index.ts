@@ -8,4 +8,5 @@ export interface Product {
     title: string
     quantity: number
     categoryTitle:string
+    createDate:number
 }
