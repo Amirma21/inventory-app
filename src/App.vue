@@ -14,7 +14,7 @@
           <add-product v-model="newProduct" :categories-list="categoryList" @add-product="addProductHandler"/>
         </v-col>
         <v-col cols="6">
-          <product-list :product-list="productsList"/>
+          <product-list :product-list="productsList" @delete-product="deleteProductHandler"/>
         </v-col>
       </v-row>
     </v-main>
@@ -64,6 +64,13 @@ function addProductHandler() {
   addToLocalStorage('product', productsList.value)
   // reset inputs
   newProduct.value.title = newProduct.value.categoryTitle = ''
+}
+
+function deleteProductHandler(index: number) {
+  //delete product form product list !
+  productsList.value.splice(index, 1)
+  // update local storage !
+  addToLocalStorage('product', productsList.value)
 }
 
 

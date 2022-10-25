@@ -20,7 +20,7 @@
               <span>{{ convertingDate(product.createDate) }}</span>
               <span class="pa-2 border rounded-xl mx-2">{{ product.categoryTitle }}</span>
               <span class="rounded-circle bg-primary pa-2 mx-2">{{ product.quantity }}</span>
-              <a-button placeholder="delete" class="ml-2"/>
+              <a-button placeholder="delete" @click="emits('deleteProduct' , index)" class="ml-2"/>
             </div>
           </div>
         </div>
@@ -34,7 +34,7 @@
 
 import FilterProducts from "@/views/ProductList/components/FilterProducts.vue";
 import AButton from "@/components/AButton.vue";
-import {defineProps, PropType, ref, watch} from 'vue'
+import {defineProps, PropType, ref, watch , defineEmits} from 'vue'
 import {Product} from "@/types";
 import {convertingDate} from "@/utilities/convertDate";
 
@@ -49,6 +49,9 @@ const props = defineProps({
 })
 const copiedProductsList = ref(props.productList)
 
+const emits = defineEmits([
+    'deleteProduct'
+])
 
 // when keyWordSearch changed this method call
 watch(keyWordSearch, () => {
