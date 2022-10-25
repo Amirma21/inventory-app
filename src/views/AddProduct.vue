@@ -18,7 +18,7 @@
     </v-row>
     <v-row>
       <v-col cols="6">
-        <a-button placeholder="cancel"/>
+        <a-button placeholder="cancel" @click="cancelAddProductHandler"/>
       </v-col>
       <v-col cols="6">
         <a-button placeholder="Add product" @click="emits('addProduct')"/>
@@ -33,6 +33,7 @@ import AInput from "@/components/AInput.vue";
 import {defineProps, PropType, computed, defineEmits} from "vue";
 import {Category, Product} from "@/types";
 import AButton from "@/components/AButton.vue";
+import  {notify} from "@kyvg/vue3-notification";
 
 
 const props = defineProps({
@@ -56,6 +57,10 @@ const value = computed({
 const selectionItems = computed(() => {
   return props.categoriesList.map((item: any) => item.title)
 })
+
+const cancelAddProductHandler = ()=>{
+  notify('vue 3 notification  🎉')
+}
 </script>
 
 <style scoped>

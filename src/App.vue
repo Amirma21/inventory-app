@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <notifications position="top left"/>
     <v-main>
       <v-app-bar>
         <div class="w-100 d-flex justify-center align-center">
