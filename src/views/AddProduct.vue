@@ -19,6 +19,15 @@
     <v-row justify="end">
       <v-col cols="6">
         <a-button
+            v-if="isEditingMood"
+            @click="emits('cancelEditing')"
+            placeholder="Cancel"
+            variant="outlined"
+            class="w-100"
+        />
+      </v-col>
+      <v-col cols="6">
+        <a-button
             @click="emits('addProduct')"
             :placeholder="placeHolder"
             variant="outlined" class="w-100"
@@ -43,7 +52,7 @@ const props = defineProps({
 })
 
 const emits = defineEmits([
-  "update:modelValue", "addProduct"
+  "update:modelValue", "addProduct", 'cancelEditing'
 ])
 
 
@@ -59,7 +68,7 @@ const selectionItems = computed(() => {
   return props.categoriesList.map((item: any) => item.title)
 })
 
-const placeHolder = computed(()=> props.isEditingMood ? 'Edit product' : 'Add product' )
+const placeHolder = computed(() => props.isEditingMood ? 'Edit product' : 'Add product')
 
 </script>
 

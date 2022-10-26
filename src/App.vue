@@ -14,6 +14,7 @@
           <add-product
               v-model="newProduct"
               @add-product="addOrEditProductHandler"
+              @cancel-editing="cancelEditingHandler"
               :is-editing-mood="editingMood"
               :categories-list="categoryList"
           />
@@ -107,6 +108,12 @@ function resetAddProductInputs() {
   newProduct.value.quantity = 0
   newProduct.value.categoryTitle = 'select...'
 }
+
+function cancelEditingHandler() {
+  resetAddProductInputs()
+  editingMood.value = false
+}
+
 
 // Prop Drilling
 provide('categoriesList', categoryList.value)
