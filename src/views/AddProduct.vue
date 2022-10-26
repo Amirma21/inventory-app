@@ -16,12 +16,13 @@
         <v-select v-model="value.categoryTitle" :items="selectionItems"/>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row justify="end">
       <v-col cols="6">
-        <a-button placeholder="cancel" @click="cancelAddProductHandler"/>
-      </v-col>
-      <v-col cols="6">
-        <a-button placeholder="Add product" @click="emits('addProduct')"/>
+        <a-button
+            @click="emits('addProduct')"
+            :placeholder="placeHolder"
+            variant="outlined" class="w-100"
+        />
       </v-col>
     </v-row>
   </v-form>
@@ -33,12 +34,12 @@ import AInput from "@/components/AInput.vue";
 import {defineProps, PropType, computed, defineEmits} from "vue";
 import {Category, Product} from "@/types";
 import AButton from "@/components/AButton.vue";
-import  {notify} from "@kyvg/vue3-notification";
 
 
 const props = defineProps({
   modelValue: {required: true, type: Object as PropType<Product>},
-  categoriesList: {required: true, type: Object as PropType<Category[]>}
+  categoriesList: {required: true, type: Object as PropType<Category[]>},
+  isEditingMood: {required: true, default: false, type: Boolean}
 })
 
 const emits = defineEmits([
@@ -58,9 +59,8 @@ const selectionItems = computed(() => {
   return props.categoriesList.map((item: any) => item.title)
 })
 
-const cancelAddProductHandler = ()=>{
-  notify('vue 3 notification  🎉')
-}
+const placeHolder = computed(()=> props.isEditingMood ? 'Edit product' : 'Add product' )
+
 </script>
 
 <style scoped>

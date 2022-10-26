@@ -11,10 +11,19 @@
       <v-row class="pa-8">
         <v-col cols="6">
           <add-category v-model="newCategory" @add-category="addCategoryHandler"/>
-          <add-product v-model="newProduct" :categories-list="categoryList" @add-product="addProductHandler"/>
+          <add-product
+              v-model="newProduct"
+              @add-product="addOrEditProductHandler"
+              :is-editing-mood="editingMood"
+              :categories-list="categoryList"
+          />
         </v-col>
         <v-col cols="6">
-          <product-list :product-list="productsList" @delete-product="deleteProductHandler"/>
+          <product-list
+              :product-list="productsList"
+              @delete-product="deleteProductHandler"
+              @edit-product="editProductHandler"
+          />
         </v-col>
       </v-row>
     </v-main>
@@ -41,7 +50,8 @@ const newCategory = ref({
 const getProducts = getFromLocalStorage('product') ?? []
 const productsList = ref<Product[]>(getProducts)
 const newProduct = ref({categoryTitle: 'select a category', quantity: 0, title: ""})
-
+const editingMood = ref(false)
+const selectedProductForEdit = ref(-1)
 
 function addCategoryHandler() {
   categoryList.value?.push({
@@ -54,17 +64,27 @@ function addCategoryHandler() {
 }
 
 
-function addProductHandler() {
-  productsList.value?.push({
-    title: newProduct.value.title,
-    quantity: newProduct.value.quantity,
-    categoryTitle: newProduct.value.categoryTitle,
-    createDate: Date.now()
-  })
-  addToLocalStorage('product', productsList.value)
-  // reset inputs
-  newProduct.value.title = newProduct.value.categoryTitle = ''
+function addOrEditProductHandler() {
+  if (!editingMood.value) {
+    productsList.value?.push({
+      title: newProduct.value.title,
+      quantity: newProduct.value.quantity,
+      categoryTitle: newProduct.value.categoryTitle,
+      createDate: Date.now()
+    })
+    addToLocalStorage('product', productsList.value)
+    resetAddProductInputs()
+  } else {
+    productsList.value[selectedProductForEdit.value].title = newProduct.value.title
+    productsList.value[selectedProductForEdit.value].quantity = newProduct.value.quantity
+    productsList.value[selectedProductForEdit.value].categoryTitle = newProduct.value.categoryTitle
+    resetAddProductInputs()
+    addToLocalStorage('product', productsList.value)
+    editingMood.value = false
+  }
+
 }
+
 
 function deleteProductHandler(index: number) {
   //delete product form product list !
@@ -73,6 +93,20 @@ function deleteProductHandler(index: number) {
   addToLocalStorage('product', productsList.value)
 }
 
+
+/// edit product
+
+function editProductHandler(index: number) {
+  editingMood.value = true
+  newProduct.value = {...productsList.value[index]}
+  selectedProductForEdit.value = index
+}
+
+function resetAddProductInputs() {
+  newProduct.value.title = ''
+  newProduct.value.quantity = 0
+  newProduct.value.categoryTitle = 'select...'
+}
 
 // Prop Drilling
 provide('categoriesList', categoryList.value)
