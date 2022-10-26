@@ -13,14 +13,17 @@
           <div
               v-for="(product , index) in copiedProductsList"
               :key="index"
-              class="d-flex justify-space-between  align-center pa-4"
+              class="d-flex justify-space-between  align-center pa-3"
           >
             <h3>{{ product.title }}</h3>
             <div class="d-flex align-center">
               <span>{{ convertingDate(product.createDate) }}</span>
               <span class="pa-2 border rounded-xl mx-2">{{ product.categoryTitle }}</span>
-              <span class="rounded-circle bg-primary pa-2 mx-2">{{ product.quantity }}</span>
+              <span class="rounded bg-primary pa-2 mx-2">{{ product.quantity }}</span>
               <a-button placeholder="delete" @click="emits('deleteProduct' , index)" class="ml-2"/>
+              <span class="rounded-circle bg-primary pa-2 ml-2 cursor-pointer" @click="emits('editProduct' , index)">
+                <v-icon small color="gray">mdi-pencil</v-icon>
+              </span>
             </div>
           </div>
         </div>
@@ -34,7 +37,7 @@
 
 import FilterProducts from "@/views/ProductList/components/FilterProducts.vue";
 import AButton from "@/components/AButton.vue";
-import {defineProps, PropType, ref, watch , defineEmits} from 'vue'
+import {defineProps, PropType, ref, watch, defineEmits} from 'vue'
 import {Product} from "@/types";
 import {convertingDate} from "@/utilities/convertDate";
 
@@ -50,7 +53,7 @@ const props = defineProps({
 const copiedProductsList = ref(props.productList)
 
 const emits = defineEmits([
-    'deleteProduct'
+  'deleteProduct', 'editProduct'
 ])
 
 // when keyWordSearch changed this method call
@@ -76,7 +79,6 @@ watch(selectedCategory, () => {
   }
 })
 
-
 // sorting watcher
 watch(sortingKeyWord, () => {
   if (sortingKeyWord.value === 'latest') {
@@ -89,7 +91,9 @@ watch(sortingKeyWord, () => {
 
 </script>
 
-<style scoped>
-
+<style>
+.cursor-pointer {
+  cursor: pointer;
+}
 
 </style>
