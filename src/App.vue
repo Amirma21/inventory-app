@@ -6,6 +6,7 @@
         <div class="w-100 d-flex justify-center align-center">
           <h3>Inventory App using Vue.js </h3>
           <span class="border rounded-circle pa-2 ml-2">{{ productsList.length }}</span>
+          <span class="ml-4" @click="settingCategoryHandler">setting</span>
         </div>
       </v-app-bar>
       <v-row class="pa-8">
@@ -27,6 +28,7 @@
           />
         </v-col>
       </v-row>
+      <category-setting :is-open-dialog="isOpenCategorySetting" @close-dialog="closeDialogHandler"/>
     </v-main>
   </v-app>
 </template>
@@ -38,6 +40,7 @@ import {addToLocalStorage, getFromLocalStorage} from "@/localStorge";
 import {Category, Product} from "@/types";
 import AddProduct from "@/views/AddProduct.vue";
 import ProductList from "@/views/ProductList/ProductList.vue";
+import CategorySetting from "@/views/CategorySetting.vue";
 
 // category section
 /// this method return array of objects
@@ -53,6 +56,7 @@ const productsList = ref<Product[]>(getProducts)
 const newProduct = ref({categoryTitle: 'select a category', quantity: 0, title: ""})
 const editingMood = ref(false)
 const selectedProductForEdit = ref(-1)
+const isOpenCategorySetting = ref(false)
 
 function addCategoryHandler() {
   categoryList.value?.push({
@@ -114,6 +118,16 @@ function cancelEditingHandler() {
   editingMood.value = false
 }
 
+
+// category setting
+
+function  settingCategoryHandler(){
+  isOpenCategorySetting.value = true
+}
+
+function closeDialogHandler(){
+  isOpenCategorySetting.value = false
+}
 
 // Prop Drilling
 provide('categoriesList', categoryList.value)
