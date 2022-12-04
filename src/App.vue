@@ -6,7 +6,11 @@
         <div class="w-100 d-flex justify-center align-center">
           <h3>Inventory App using Vue.js </h3>
           <span class="border rounded-circle pa-2 ml-2">{{ productsList.length }}</span>
-          <span class="ml-4" @click="settingCategoryHandler">setting</span>
+          <span class="ml-4 cursor-pointer" @click="settingCategoryHandler">
+            <v-icon>
+              mdi-dots-vertical
+            </v-icon>
+          </span>
         </div>
       </v-app-bar>
       <v-row class="pa-8">
@@ -28,7 +32,11 @@
           />
         </v-col>
       </v-row>
-      <category-setting :is-open-dialog="isOpenCategorySetting" @close-dialog="closeDialogHandler"/>
+      <category-setting
+          :is-open-dialog="isOpenCategorySetting"
+          @close-dialog="closeDialogHandler"
+          @deleteCategory="deleteCategory"
+      />
     </v-main>
   </v-app>
 </template>
@@ -121,15 +129,25 @@ function cancelEditingHandler() {
 
 // category setting
 
-function  settingCategoryHandler(){
+function settingCategoryHandler() {
   isOpenCategorySetting.value = true
 }
 
-function closeDialogHandler(){
+function closeDialogHandler() {
   isOpenCategorySetting.value = false
+}
+
+function deleteCategory(index: number) {
+  categoryList.value.splice(index , 1)
+  addToLocalStorage('category' , categoryList.value)
 }
 
 // Prop Drilling
 provide('categoriesList', categoryList.value)
 
 </script>
+<style>
+.cursor-pointer {
+  cursor: pointer;
+}
+</style>
