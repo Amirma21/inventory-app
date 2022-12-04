@@ -3,6 +3,7 @@
       @click="emits('click')"
       :variant="props.variant"
   >
+    <slot name="icon"></slot>
     <div class="d-flex justify-center align-center">
       <h4>
         {{ props.placeholder }}
