@@ -9,4 +9,5 @@ export interface Product {
     quantity: number
     categoryTitle:string
     createDate:number
+    rate: number
 }
