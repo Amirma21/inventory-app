@@ -61,7 +61,7 @@ const newCategory = ref({
 //product section
 const getProducts = getFromLocalStorage('product') ?? []
 const productsList = ref<Product[]>(getProducts)
-const newProduct = ref({categoryTitle: 'select a category', quantity: 0, title: ""})
+const newProduct = ref({categoryTitle: 'select a category', quantity: 0, title: "" , rate:2})
 const editingMood = ref(false)
 const selectedProductForEdit = ref(-1)
 const isOpenCategorySetting = ref(false)
@@ -83,7 +83,8 @@ function addOrEditProductHandler() {
       title: newProduct.value.title,
       quantity: newProduct.value.quantity,
       categoryTitle: newProduct.value.categoryTitle,
-      createDate: Date.now()
+      createDate: Date.now() ,
+      rate: newProduct.value.rate
     })
     addToLocalStorage('product', productsList.value)
     resetAddProductInputs()

@@ -17,6 +17,10 @@
           >
             <h3>{{ product.title }}</h3>
             <div class="d-flex align-center">
+              <span class="d-flex justify-center align-center mr-3">
+                <h3>{{product.rate}}</h3>
+                <v-icon small :color="colorOfStar(product.rate)">mdi-star</v-icon>
+              </span>
               <span>{{ convertingDate(product.createDate) }}</span>
               <span class="pa-2 border rounded-xl mx-2">{{ product.categoryTitle }}</span>
               <span class="rounded bg-primary pa-2 mx-2">{{ product.quantity }}</span>
@@ -37,7 +41,7 @@
 
 import FilterProducts from "@/views/ProductList/components/FilterProducts.vue";
 import AButton from "@/components/AButton.vue";
-import {defineProps, PropType, ref, watch, defineEmits} from 'vue'
+import {defineProps, PropType, ref, watch, defineEmits, computed} from 'vue'
 import {Product} from "@/types";
 import {convertingDate} from "@/utilities/convertDate";
 
@@ -88,6 +92,19 @@ watch(sortingKeyWord, () => {
     return copiedProductsList.value.sort((a, b) => b.createDate - a.createDate)
   }
 })
+
+
+// this computed return color of stat
+
+const colorOfStar = (rate:number) => {
+  if (rate <= 2){
+    return 'red'
+  }else if (rate <= 3){
+    return  'gray'
+  }else if (rate <= 4 ){
+    return 'green'
+  }else return 'orange'
+}
 
 </script>
 
