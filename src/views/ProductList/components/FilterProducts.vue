@@ -75,6 +75,8 @@ const selectedSortingKeywordValue = computed({
   }
 })
 
+
+//categories name add to v-select + All
 const categoriesTitleList = computed(() => {
   const newList = categoriesList?.map((category: any) => category.title)
   newList?.push('All')
