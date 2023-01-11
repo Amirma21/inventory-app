@@ -14,7 +14,7 @@
         </div>
       </v-app-bar>
       <v-row class="pa-8">
-        <v-col cols="6">
+        <v-col md="6" cols="12">
           <add-category v-model="newCategory" @add-category="addCategoryHandler"/>
           <add-product
               v-model="newProduct"
@@ -24,7 +24,7 @@
               :categories-list="categoryList"
           />
         </v-col>
-        <v-col cols="6">
+        <v-col md="6" cols="12">
           <product-list
               :product-list="productsList"
               @delete-product="deleteProductHandler"
