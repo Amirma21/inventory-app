@@ -37,6 +37,8 @@
           @close-dialog="closeDialogHandler"
           @deleteCategory="deleteCategory"
       />
+      <test-component v-model="message" />
+      {{message}}
     </v-main>
   </v-app>
 </template>
@@ -49,6 +51,10 @@ import {Category, Product} from "@/types";
 import AddProduct from "@/views/AddProduct.vue";
 import ProductList from "@/views/ProductList/ProductList.vue";
 import CategorySetting from "@/views/CategorySetting.vue";
+import TestComponent from "@/views/TestComponent.vue";
+
+
+const message = ref('')
 
 // category section
 /// this method return array of objects
